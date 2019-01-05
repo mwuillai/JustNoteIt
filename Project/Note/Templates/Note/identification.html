@@ -1,0 +1,17 @@
+{% extends "Note/base.html" %}
+
+{% block content %}
+<p>Homepage such wow</p>
+<h2>Authentication form</h2>
+<form method="post">
+    {% csrf_token %}
+    {{auth.as_p}}
+    <input type="Submit" value="Authentication" name="Authentication">
+</form>
+<h2>Sign Up form</h2>
+<form method="post">
+    {% csrf_token %}
+    {{sign_up.as_p}}
+    <input type="submit" value="Sign up" name="Sign up">
+</form>
+{% endblock content %}
