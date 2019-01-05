@@ -2,3 +2,6 @@ jni/
 .pyc
 .vscode/
 deactivate/
+migrations/
+__pycache__/
+db.sqlite3

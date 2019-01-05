@@ -1,6 +1,6 @@
 from django.test import TestCase
 from mixer.backend.django import mixer
-import Note.models
+import Note.models as models
 
 
 class TestNotes(TestCase):
@@ -9,5 +9,5 @@ class TestNotes(TestCase):
     """
 
     def test_instance_creation(self):
-        note = mixer.blend(Notes, commit=False)
-        self.assertIsInstance(note, Notes)
+        note = mixer.blend('Note.notes')
+        self.assertIsInstance(note, models.Notes)
