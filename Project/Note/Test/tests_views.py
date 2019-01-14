@@ -1,7 +1,6 @@
 from django.test import TestCase, Client
 from django.contrib.auth.models import User
 from django.urls import reverse
-import Note.views
 
 class TestIdentification(TestCase):
     """
@@ -77,3 +76,34 @@ class TestIdentification(TestCase):
         self.assertEqual(302, response.status_code)
         self.assertNotIn('_auth_user_id', self.client_with_account.session)
         self.assertEqual(users_number_after, (users_number_before))
+
+class TestDashboard(TestCase):
+    """
+    Test Dashboard
+    A logged user can access to this page.
+    A visitor must be redirect to the identification view
+    """
+    def setUp(self):
+        user = User.objects.create_user('test', 'test@test.com', 'test')
+        user.save()
+        self.client_with_account = Client()
+        self.client_with_account.login(username='test', password='test')
+        self.client_without_account = Client()
+
+    def test_log_user(self):
+        """
+        test if a log user can access to the dashboard
+        """
+        response = self.client_with_account.get(reverse('dashboard'))
+        self.assertEqual(200, response.status_code)
+
+    def test_unlog_user(self):
+        """
+        test if a visitor is redirect
+        """
+        response = self.client_without_account.get(reverse('dashboard'), follow=True)
+        self.assertRedirects(
+            response,
+            '/?next=/dashboard/',
+            status_code=302,
+            target_status_code=200)

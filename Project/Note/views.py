@@ -1,7 +1,9 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import authenticate, login
-
+from .models import Category, Notes
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic import ListView
 
 def identification(request):
     """
@@ -20,16 +22,16 @@ def identification(request):
             user = authenticate(request, username=username, password=password)
             if user is not None:
                 login(request, user)
-                return redirect("win")
-            else:
-                return redirect('identification')
+                return redirect("dashboard")
+            
+            return redirect('identification')
         elif 'Sign up' in request.POST:
             form = UserCreationForm(request.POST)
             try:
                 form.save()
             except ValueError:
                 return redirect('identification')
-            return redirect('win')
+            return redirect('dashboard')
     else:
         sign_up_form = UserCreationForm()
         auth_form = AuthenticationForm()
@@ -40,3 +42,22 @@ def identification(request):
 
 def win(request):
     return render(request, 'Note/win.html')
+
+class Dashboard(LoginRequiredMixin, ListView):
+    """Basic ListView implementation to call notes."""
+    model = Notes
+    paginate_by = 15
+    context_object_name = "notes"
+    template_name = "Note/dashboard.html"
+
+    def get_context_data(self, *args, **kwargs):
+        current_user = self.request.user
+        context = super().get_context_data(*args, **kwargs)
+        context.update({
+            'categories': Category.objects.filter(user_id=current_user.id),
+        })
+        return context
+
+    def get_queryset(self, **kwargs):
+        current_user = self.request.user
+        return Notes.objects.filter(user_id=current_user.id)

@@ -19,5 +19,5 @@ import Note
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('Note.urls')),
+    path('', include('Note.urls'), name="home"),
 ]

@@ -1,0 +1,24 @@
+{% extends "Note/base.html" %}
+
+{% block content %}
+<h1>Categories</h1>
+{% if categories %}
+    <ul>
+    {% for category in categories %}
+        <li>{{ category.title }}</li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No categories</p>
+{% endif %}
+<h1>Notes</h1>
+{% if notes %}
+    <ul>
+    {% for note in notes %}
+        <li>{{ note.title }}</li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No notes</p>
+{% endif %}
+{% endblock content %}
