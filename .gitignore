@@ -6,3 +6,4 @@ migrations/
 __pycache__/
 db.sqlite3
 Project/geckodriver.log
+venv/

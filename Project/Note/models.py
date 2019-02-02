@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils.text import slugify
 
 # Create your models here.
 class Notes(models.Model):
@@ -14,6 +15,7 @@ class Notes(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True, null=True)
     user_id = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
+    slug = models.SlugField(max_length=80, null=True, blank=True)
 
     class Meta:
         verbose_name = ("Note")
@@ -22,6 +24,11 @@ class Notes(models.Model):
 
     def __str__(self):
         return self.title
+    
+    def save(self, *args, **kwargs):
+        self.slug = slugify(
+            f"{self.title}-{self.created_at.day}-{self.created_at.month}-{self.created_at.year}".lower())
+        super(Notes, self).save(*args, **kwargs) # Call the real save() method
 
 
 class Category(models.Model):
@@ -35,6 +42,7 @@ class Category(models.Model):
     updated_at = models.DateTimeField(auto_now=True, null=True)
     user_id = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
     notes_id = models.ManyToManyField(Notes)
+    slug = models.SlugField(max_length=80, null=True, blank=True)
 
     class Meta:
         verbose_name = ("Category")
@@ -43,3 +51,9 @@ class Category(models.Model):
 
     def __str__(self):
         return self.title
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(
+                f"{self.title}-{self.created_at.day}-{self.created_at.month}-{self.created_at.year}".lower())
+            super(Category, self).save(*args, **kwargs) # Call the real save() method

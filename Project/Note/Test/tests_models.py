@@ -31,6 +31,19 @@ class TestNotes(TestCase):
         created_date.replace(tzinfo=None)
         self.assertTrue((now - timedelta(seconds=50)) <= created_date <= now)
 
+    def test_slug_format(self):
+        """
+        Test if slug field is correctly set up
+        """
+        note = models.Notes.objects.get(pk=1)
+        note.save()
+        now = datetime.now(pytz.timezone(TIME_ZONE))
+        title = note.title
+        formated_title = title.replace(" ", "-")
+        formated_title = formated_title.lower()
+        expected_slug_field = "-".join([formated_title, str(now.day), str(now.month), str(now.year)])
+        self.assertEqual(note.slug, expected_slug_field)
+
 
 class TestCategory(TestCase):
     """

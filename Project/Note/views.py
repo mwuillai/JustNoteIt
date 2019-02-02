@@ -3,7 +3,7 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import authenticate, login
 from .models import Category, Notes
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
 
 def identification(request):
     """
@@ -40,8 +40,6 @@ def identification(request):
             'sign_up':sign_up_form
         })
 
-def win(request):
-    return render(request, 'Note/win.html')
 
 class Dashboard(LoginRequiredMixin, ListView):
     """Basic ListView implementation to call notes."""
@@ -61,3 +59,18 @@ class Dashboard(LoginRequiredMixin, ListView):
     def get_queryset(self, **kwargs):
         current_user = self.request.user
         return Notes.objects.filter(user_id=current_user.id)
+
+
+class DetailNotesView(LoginRequiredMixin, DetailView):
+    """Basic DetailView implementation to call an individual Notes."""
+    model = Notes
+    context_object_name = "notes"
+    template_name = "Note/detail.html"
+
+    def get_context_data(self, *args, **kwargs):
+        current_user = self.request.user
+        context = super().get_context_data(*args, **kwargs)
+        context.update({
+            'categories': Category.objects.filter(user_id=current_user.id),
+        })
+        return context

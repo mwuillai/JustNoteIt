@@ -57,9 +57,11 @@ class TestIdentification(TestCase):
             {'username':'test789',
              'password1':'test245*',
              'password2':'test245*',
-             'Sign up':'Sign up'}
+             'Sign up':'Sign up'},
+             follow = True
             )
-        self.assertEqual(302, response.status_code)
+        self.assertRedirects(response, '/?next=/dashboard/', status_code=302,
+        target_status_code=200,msg_prefix='', fetch_redirect_response=True)
         self.assertNotIn('_auth_user_id', self.client_with_account.session)
         users_number_after = User.objects.count()
         self.assertEqual(users_number_after, users_number_before+1)
@@ -70,10 +72,12 @@ class TestIdentification(TestCase):
         users_number_before = User.objects.count()
         response = self.client_without_account.post(
             reverse('identification'),
-            {'username':'test789', 'password1':'test24', 'password2':'test22', 'Sign up':'Sign up'}
+            {'username':'test789', 'password1':'test24', 'password2':'test22', 'Sign up':'Sign up'},
+            follow = True
             )
         users_number_after = User.objects.count()
-        self.assertEqual(302, response.status_code)
+        self.assertRedirects(response, '/', status_code=302,
+        target_status_code=200,msg_prefix='', fetch_redirect_response=True)
         self.assertNotIn('_auth_user_id', self.client_with_account.session)
         self.assertEqual(users_number_after, (users_number_before))
 
