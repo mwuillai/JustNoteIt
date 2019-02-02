@@ -1,16 +1,7 @@
 {% extends "Note/base.html" %}
 
 {% block content %}
-<h1>Categories</h1>
-{% if categories %}
-    <ul>
-    {% for category in categories %}
-        <li><a href="{% url 'Note:category' category.slug %}">{{ category.slug }}</a></li>
-    {% endfor %}
-    </ul>
-{% else %}
-    <p>No categories</p>
-{% endif %}
+<h1>{{ category.title }}</h1>
 <h1>Notes</h1>
 {% if notes %}
     <ul>

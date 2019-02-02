@@ -1,6 +1,6 @@
 from django.test import TestCase, Client
 from django.contrib.auth.models import User
-from Note.models import Notes
+from Note.models import Notes, Category
 from django.urls import reverse
 from datetime import datetime
 import pytz
@@ -144,5 +144,41 @@ class TestDetailNote(TestCase):
         self.assertRedirects(
             response,
             '/?next=' + reverse('Note:detail', args=([self.note.slug])),
+            status_code=302,
+            target_status_code=200)
+
+
+class TestDetailCategory(TestCase):
+    """
+    Test detail Category view
+    """
+    def setUp(self):
+        user = User.objects.create_user('test', 'test@test.com', 'test')
+        user.save()
+        self.client_with_account = Client()
+        self.client_with_account.login(username='test', password='test')
+        self.client_without_account = Client()
+        self.category = Category(title = "Test", created_at = datetime.now(pytz.timezone(TIME_ZONE)))
+        self.category.save()
+        self.note = Notes(title = "Test", body = "Body of my test note", created_at = datetime.now(pytz.timezone(TIME_ZONE)))
+        self.note.save()
+        self.category.notes_id.add(self.note)
+        
+
+    def test_log_user(self):
+        """
+        test if a log user can access to the test note
+        """
+        response = self.client_with_account.get(reverse('Note:category', args=([self.note.slug])))
+        self.assertEqual(200, response.status_code)
+
+    def test_unlog_user(self):
+        """
+        test if a visitor is redirect
+        """
+        response = self.client_without_account.get(reverse('Note:category', args=([self.note.slug])), follow=True)
+        self.assertRedirects(
+            response,
+            '/?next=' + reverse('Note:category', args=([self.note.slug])),
             status_code=302,
             target_status_code=200)

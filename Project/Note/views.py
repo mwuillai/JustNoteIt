@@ -74,3 +74,18 @@ class DetailNotesView(LoginRequiredMixin, DetailView):
             'categories': Category.objects.filter(user_id=current_user.id),
         })
         return context
+
+
+class DetailCategoriesView(LoginRequiredMixin, DetailView):
+    """Basic DetailView implementation for filter notes of an individual category."""
+    model = Category
+    context_object_name = "categories"
+    template_name = "Note/category.html"
+
+    def get_context_data(self, *args, **kwargs):
+        current_user = self.request.user
+        context = super().get_context_data(*args, **kwargs)
+        context.update({
+            'notes': Notes.objects.filter(user_id=current_user.id, category__slug=self.get_object().slug),
+        })
+        return context
