@@ -22,16 +22,16 @@ def identification(request):
             user = authenticate(request, username=username, password=password)
             if user is not None:
                 login(request, user)
-                return redirect("dashboard")
+                return redirect("Note:dashboard")
             
-            return redirect('identification')
+            return redirect('Note:identification')
         elif 'Sign up' in request.POST:
             form = UserCreationForm(request.POST)
             try:
                 form.save()
             except ValueError:
-                return redirect('identification')
-            return redirect('dashboard')
+                return redirect('Note:identification')
+            return redirect('Note:dashboard')
     else:
         sign_up_form = UserCreationForm()
         auth_form = AuthenticationForm()

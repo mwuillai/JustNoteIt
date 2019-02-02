@@ -18,7 +18,7 @@ class TestIdentification(TestCase):
 
     def test_identification_view_work(self):
         "Test if getting the view is working"
-        view = self.client_with_account.get(reverse('identification'))
+        view = self.client_with_account.get(reverse('Note:identification'))
         self.assertEqual(200, view.status_code)
 
 
@@ -27,7 +27,7 @@ class TestIdentification(TestCase):
         we will also verify that the request has not create a new user"""
         users_number_before = User.objects.count()
         response = self.client_with_account.post(
-            reverse('identification'),
+            reverse('Note:identification'),
             {'username':'test', 'password':'test', 'Authentication':'Authentication'}
             )
         users_number_after = User.objects.count()
@@ -41,7 +41,7 @@ class TestIdentification(TestCase):
         we will also verify that the request has not create a new user"""
         users_number_before = User.objects.count()
         response = self.client_with_account.post(
-            reverse('identification'),
+            reverse('Note:identification'),
             {'username':'test2', 'password':'test', 'Authentication':'Authentication'}
             )
         users_number_after = User.objects.count()
@@ -53,7 +53,7 @@ class TestIdentification(TestCase):
         """ Test if the accout creation work"""
         users_number_before = User.objects.count()
         response = self.client_without_account.post(
-            reverse('identification'),
+            reverse('Note:identification'),
             {'username':'test789',
              'password1':'test245*',
              'password2':'test245*',
@@ -71,7 +71,7 @@ class TestIdentification(TestCase):
         """ Test if the accout creation fail with wrong password"""
         users_number_before = User.objects.count()
         response = self.client_without_account.post(
-            reverse('identification'),
+            reverse('Note:identification'),
             {'username':'test789', 'password1':'test24', 'password2':'test22', 'Sign up':'Sign up'},
             follow = True
             )
@@ -98,14 +98,14 @@ class TestDashboard(TestCase):
         """
         test if a log user can access to the dashboard
         """
-        response = self.client_with_account.get(reverse('dashboard'))
+        response = self.client_with_account.get(reverse('Note:dashboard'))
         self.assertEqual(200, response.status_code)
 
     def test_unlog_user(self):
         """
         test if a visitor is redirect
         """
-        response = self.client_without_account.get(reverse('dashboard'), follow=True)
+        response = self.client_without_account.get(reverse('Note:dashboard'), follow=True)
         self.assertRedirects(
             response,
             '/?next=/dashboard/',
