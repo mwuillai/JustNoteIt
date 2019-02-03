@@ -1,6 +1,9 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils.text import slugify
+from datetime import datetime, timedelta
+import pytz
+from Project.settings import TIME_ZONE
 
 # Create your models here.
 class Notes(models.Model):
@@ -16,6 +19,7 @@ class Notes(models.Model):
     updated_at = models.DateTimeField(auto_now=True, null=True)
     user_id = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
     slug = models.SlugField(max_length=80, null=True, blank=True)
+    category_id = models.ManyToManyField("Note.Category")
 
     class Meta:
         verbose_name = ("Note")
@@ -26,6 +30,8 @@ class Notes(models.Model):
         return self.title
     
     def save(self, *args, **kwargs):
+        if not self.created_at:
+            self.created_at = datetime.now(pytz.timezone(TIME_ZONE))
         self.slug = slugify(
             f"{self.title}-{self.created_at.day}-{self.created_at.month}-{self.created_at.year}".lower())
         super(Notes, self).save(*args, **kwargs) # Call the real save() method

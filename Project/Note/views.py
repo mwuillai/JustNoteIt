@@ -1,9 +1,10 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, reverse
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import authenticate, login
 from .models import Category, Notes
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, CreateView
+from .forms import NotesForm
 
 def identification(request):
     """
@@ -89,3 +90,19 @@ class DetailCategoriesView(LoginRequiredMixin, DetailView):
             'notes': Notes.objects.filter(user_id=current_user.id, category__slug=self.get_object().slug),
         })
         return context
+
+
+class CreateNoteView(LoginRequiredMixin, CreateView):
+    """Basic CreateView implementation to create new notes."""
+    model = Notes
+    # message = _("Your note has been created.")
+    form_class = NotesForm
+    template_name = 'Note/add_note.html'
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        # messages.success(self.request, self.message)
+        return reverse('Note:dashboard')
