@@ -12,6 +12,8 @@ class TestNotes(TestCase):
     """
     def setUp(self):
         mixer.blend('Note.notes')
+        self.manually_created_note1 = models.Notes(title = "Test", body = "Body of my test note")
+        self.manually_created_note2 = models.Notes(title = "Test", body = "Body of my second test note")
 
     def test_instance_creation(self):
         """
@@ -43,6 +45,25 @@ class TestNotes(TestCase):
         formated_title = formated_title.lower()
         expected_slug_field = "-".join([formated_title, str(now.day), str(now.month), str(now.year)])
         self.assertEqual(note.slug, expected_slug_field)
+
+    def test_manually_created_note(self):
+        """
+        Test if a note created manually with only title and body is working
+        To verify that we will check is the instance of note is created
+        We will also check if there is a value in slug field
+        """
+        self.assertIsInstance(self.manually_created_note1, models.Notes)
+        self.assertIsNotNone(self.manually_created_note1.slug)
+
+
+    def test_if_there_is_duplicate_slug_field(self):
+        """
+        My default rule for slugfield can potentially generate two identif slug if
+        the same day two notes are create. We will check if there is correctly a correct
+        incrementation of a counter who permit to distingue those notes
+        """
+        self.assertNotEqual(self.manually_created_note1.slug, self.manually_created_note2.slug)
+
 
 
 class TestCategory(TestCase):
