@@ -13,7 +13,9 @@ class TestNotes(TestCase):
     def setUp(self):
         mixer.blend('Note.notes')
         self.manually_created_note1 = models.Notes(title = "Test", body = "Body of my test note")
+        self.manually_created_note1.save()
         self.manually_created_note2 = models.Notes(title = "Test", body = "Body of my second test note")
+        self.manually_created_note2.save()
 
     def test_instance_creation(self):
         """
