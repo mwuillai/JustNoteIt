@@ -167,18 +167,18 @@ class TestDetailCategory(TestCase):
 
     def test_log_user(self):
         """
-        test if a log user can access to the test note
+        test if a log user can access to the test category
         """
-        response = self.client_with_account.get(reverse('Note:category', args=([self.note.slug])))
+        response = self.client_with_account.get(reverse('Note:category', args=([self.category.slug])))
         self.assertEqual(200, response.status_code)
 
     def test_unlog_user(self):
         """
         test if a visitor is redirect
         """
-        response = self.client_without_account.get(reverse('Note:category', args=([self.note.slug])), follow=True)
+        response = self.client_without_account.get(reverse('Note:category', args=([self.category.slug])), follow=True)
         self.assertRedirects(
             response,
-            '/?next=' + reverse('Note:category', args=([self.note.slug])),
+            '/?next=' + reverse('Note:category', args=([self.category.slug])),
             status_code=302,
             target_status_code=200)

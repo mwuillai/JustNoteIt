@@ -45,7 +45,13 @@ class TestNotes(TestCase):
         title = note.title
         formated_title = title.replace(" ", "-")
         formated_title = formated_title.lower()
-        expected_slug_field = "-".join([formated_title, str(now.day), str(now.month), str(now.year)])
+        expected_slug_field = "-".join([
+            formated_title,
+            str(now.day),
+            str(now.month),
+            str(now.year),
+            str(note.pk)])
+        expected_slug_field.replace("--","-")
         self.assertEqual(note.slug, expected_slug_field)
 
     def test_manually_created_note(self):

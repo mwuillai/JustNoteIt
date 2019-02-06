@@ -14,7 +14,7 @@ def identification(request):
     second one is the userCreationForm. in the post response
     the difference between those two form is made with the input button.
 
-    STILL TO DO : Manage the possibility of a login user from a previous session
+    STILL TODO : Manage the possibility of a login user from a previous session
     who will directly reach the dashboard view
     """
     if request.method == "POST":

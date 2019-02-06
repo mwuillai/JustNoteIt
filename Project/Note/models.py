@@ -30,11 +30,20 @@ class Notes(models.Model):
         return self.title
     
     def save(self, *args, **kwargs):
-        if not self.created_at:
-            self.created_at = datetime.now(pytz.timezone(TIME_ZONE))
-        
+        """
+        If there is no pk it means that is the first time we save this object
+        in that case we save it a first time to generate pk and created date.
+        In all case after each save we generate a slug in case there is a change in the title
+        """
+        if not self.pk:
+            super(Notes, self).save(*args, **kwargs) 
         self.slug = slugify(
-            f"{self.title}-{self.created_at.day}-{self.created_at.month}-{self.created_at.year}".lower())
+            "-".join([
+                self.title,
+                str(self.created_at.day),
+                str(self.created_at.month),
+                str(self.created_at.year),
+                str(self.pk)]))
         super(Notes, self).save(*args, **kwargs) # Call the real save() method
 
 
@@ -42,6 +51,8 @@ class Category(models.Model):
     """
     Class of the category model. they can have a tittle.
     Many notes can be attach to a category, and only one user can be attach to it.
+    TODO evolve the save method to generate a slug with a pk and make a first
+    save if it's the first one
     """
 
     title = models.CharField(max_length=30)
