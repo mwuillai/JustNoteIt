@@ -19,7 +19,7 @@ class Notes(models.Model):
     updated_at = models.DateTimeField(auto_now=True, null=True)
     user_id = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
     slug = models.SlugField(max_length=80, null=True, blank=True)
-    category_id = models.ManyToManyField("Note.Category")
+    category_id = models.ManyToManyField("Note.Category", blank=True)
 
     class Meta:
         verbose_name = ("Note")
@@ -59,7 +59,7 @@ class Category(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True, null=True)
     user_id = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
-    notes_id = models.ManyToManyField(Notes)
+    notes_id = models.ManyToManyField(Notes, blank = True)
     slug = models.SlugField(max_length=80, null=True, blank=True)
 
     class Meta:
