@@ -4,6 +4,7 @@ from django.contrib.auth import authenticate, login
 from .models import Category, Notes
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView, DetailView
+from django.http import JsonResponse
 
 def identification(request):
     """
@@ -89,3 +90,10 @@ class DetailCategoriesView(LoginRequiredMixin, DetailView):
             'notes': Notes.objects.filter(user_id=current_user.id, category__slug=self.get_object().slug),
         })
         return context
+
+"""
+TODO use this tutorial https://simpleisbetterthancomplex.com/tutorial/2016/08/29/how-to-work-with-ajax-request-with-django.html
+for wirting two ajax method, one to add on the go a new category and another to get the category list
+In this I will be able to refresh categoryh list of a form without refresh the whole page
+"""
+
