@@ -51,8 +51,6 @@ class Category(models.Model):
     """
     Class of the category model. they can have a tittle.
     Many notes can be attach to a category, and only one user can be attach to it.
-    TODO evolve the save method to generate a slug with a pk and make a first
-    save if it's the first one
     """
 
     title = models.CharField(max_length=30)
@@ -71,7 +69,15 @@ class Category(models.Model):
         return self.title
 
     def save(self, *args, **kwargs):
+        if not self.pk:
+            super(Category, self).save(*args, **kwargs)
         if not self.slug:
             self.slug = slugify(
-                f"{self.title}-{self.created_at.day}-{self.created_at.month}-{self.created_at.year}".lower())
-            super(Category, self).save(*args, **kwargs) # Call the real save() method
+                "-".join([
+                    self.title,
+                    str(self.created_at.day),
+                    str(self.created_at.month),
+                    str(self.created_at.year),
+                    str(self.pk)
+                ]))
+        super(Category, self).save(*args, **kwargs) # Call the real save() method

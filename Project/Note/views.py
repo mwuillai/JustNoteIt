@@ -100,14 +100,16 @@ In this I will be able to refresh categoryh list of a form without refresh the w
 
 
 class CreateNoteView(LoginRequiredMixin, CreateView):
-    """Basic CreateView implementation to create new notes."""
+    """Basic CreateView implementation to create new notes.
+    TODO manage message and category selection
+    """
     model = Notes
     # message = _("Your note has been created.")
     form_class = NotesForm
     template_name = 'Note/add_note.html'
 
     def form_valid(self, form):
-        form.instance.user = self.request.user
+        form.instance.user_id = self.request.user
         return super().form_valid(form)
 
     def get_success_url(self):
