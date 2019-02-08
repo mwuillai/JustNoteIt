@@ -1,19 +1,41 @@
 {% extends "Note/base.html" %}
-
+{% load static %}
 {% block content %}
-<div class="container text-center">
-<div class='title'>Just Note It</div>
-<h2>Authentication form</h2>
-<form method="post">
-    {% csrf_token %}
-    {{auth.as_p}}
-    <input type="Submit" value="Authentication" name="Authentication">
-</form>
-<h2>Sign Up form</h2>
-<form method="post">
-    {% csrf_token %}
-    {{sign_up.as_p}}
-    <input type="submit" value="Sign up" name="Sign up">
-</form>
+<style>
+body { 
+    background-image: url("{% static 'img/login_bg.png' %}");
+
+    }
+</style>
+<div class="container identification-box">
+    <div class="row align-items-end">
+        <div class="jumbotron col">
+        <div class='display-4 text-center'>Just Note It</div>
+            <div class="text-center">
+            <ul class="nav nav-tabs">
+            <li class="active"><a data-toggle="tab" href="#login">Authentication</a></li>
+            <li><a data-toggle="tab" href="#signin">Sign up</a></li>
+            </ul>
+            <div class="tab-content">
+                <div id="login" class="tab-pane fade in active">
+                    <h2>Authentication form</h2>
+                    <form method="post">
+                        {% csrf_token %}
+                        {{auth.as_p}}
+                        <input type="Submit" value="Authentication" name="Authentication">
+                    </form>
+                </div>
+                <div id="signin" class="tab-pane fade">
+                    <h2>Sign Up form</h2>
+                    <form method="post">
+                        {% csrf_token %}
+                        {{sign_up.as_p}}
+                        <input type="submit" value="Sign up" name="Sign up">
+                    </form>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock content %}

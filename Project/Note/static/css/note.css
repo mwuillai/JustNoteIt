@@ -1,3 +1,7 @@
-body {
-    background-color: red;
+.identification-box {
+    padding: 50px;
+}
+
+.jumbotron {
+    background-color: #7ABA9B !important;
 }
