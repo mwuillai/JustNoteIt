@@ -7,30 +7,50 @@ body {
 
     }
 </style>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">Just Note It</a>
+    </div>
+    {% comment %} <ul class="nav navbar-nav">
+      <li class="active"><a href="#">Home</a></li>
+      <li><a href="#">Page 1</a></li>
+      <li><a href="#">Page 2</a></li>
+    </ul> {% endcomment %}
+    <ul class="nav navbar-nav navbar-right nav-pills mb-3">
+      <li class="nav-item">
+        <a class="nav-link active" id="pills-home-tab" data-toggle="pill" role="tab" aria-controls="pills-home" aria-selected="true" href="#login">
+            <span class="glyphicon glyphicon-log-in"></span>Login
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="pills-profile-tab" data-toggle="pill" role="tab" aria-controls="pills-profile" aria-selected="false" href="#signin">
+        <span class="glyphicon glyphicon-user"></span> Sign up
+        </a>
+      </li>
+    </ul>
+  </div>
+</nav>
 <div class="container identification-box">
     <div class="row align-items-end">
         <div class="jumbotron col">
-        <div class='display-4 text-center'>Just Note It</div>
             <div class="text-center">
-            <ul class="nav nav-tabs">
-            <li class="active"><a data-toggle="tab" href="#login">Authentication</a></li>
-            <li><a data-toggle="tab" href="#signin">Sign up</a></li>
-            </ul>
-            <div class="tab-content">
-                <div id="login" class="tab-pane fade in active">
+            <img src="{% static 'img/logo.png' %}" alt="just note it" class="rounded mx-auto d-block">
+            <div class="tab-content" id="pills-tabContent">
+                <div id="login" class="tab-pane fade show active" role="tabpanel">
                     <h2>Authentication form</h2>
                     <form method="post">
                         {% csrf_token %}
                         {{auth.as_p}}
-                        <input type="Submit" value="Authentication" name="Authentication">
+                        <input type="Submit" value="Authentication" name="Authentication" class="btn btn-primary btn-lg">
                     </form>
                 </div>
-                <div id="signin" class="tab-pane fade">
+                <div id="signin" class="tab-pane fade" role="tabpanel">
                     <h2>Sign Up form</h2>
                     <form method="post">
                         {% csrf_token %}
                         {{sign_up.as_p}}
-                        <input type="submit" value="Sign up" name="Sign up">
+                        <input type="submit" value="Sign up" name="Sign up" class="btn btn-primary btn-lg">
                     </form>
                 </div>
             </div>

@@ -3,5 +3,10 @@
 }
 
 .jumbotron {
-    background-color: #7ABA9B !important;
+    background-color: RGB(14, 114, 112) !important;
+    color: whitesmoke !important; 
+}
+
+.jumbotron input {
+    color: black !important;
 }
