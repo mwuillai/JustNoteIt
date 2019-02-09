@@ -1,5 +1,8 @@
 {% extends "Note/base.html" %}
 {% load static %}
+
+{% load widget_tweaks %}
+
 {% block content %}
 <style>
 body { 
@@ -10,13 +13,8 @@ body {
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="container-fluid">
     <div class="navbar-header">
-      <a class="navbar-brand" href="#">Just Note It</a>
+      <a class="navbar-brand" href="#"><i class="far fa-sticky-note fa-lg p-r-10 text-white"></i> Just Note It</a>
     </div>
-    {% comment %} <ul class="nav navbar-nav">
-      <li class="active"><a href="#">Home</a></li>
-      <li><a href="#">Page 1</a></li>
-      <li><a href="#">Page 2</a></li>
-    </ul> {% endcomment %}
     <ul class="nav navbar-nav navbar-right nav-pills mb-3">
       <li class="nav-item">
         <a class="nav-link active" id="pills-home-tab" data-toggle="pill" role="tab" aria-controls="pills-home" aria-selected="true" href="#login">
@@ -31,31 +29,41 @@ body {
     </ul>
   </div>
 </nav>
-<div class="container identification-box">
-    <div class="row align-items-end">
-        <div class="jumbotron col">
-            <div class="text-center">
-            <img src="{% static 'img/logo.png' %}" alt="just note it" class="rounded mx-auto d-block">
-            <div class="tab-content" id="pills-tabContent">
-                <div id="login" class="tab-pane fade show active" role="tabpanel">
-                    <h2>Authentication form</h2>
-                    <form method="post">
-                        {% csrf_token %}
-                        {{auth.as_p}}
-                        <input type="Submit" value="Authentication" name="Authentication" class="btn btn-primary btn-lg">
-                    </form>
-                </div>
-                <div id="signin" class="tab-pane fade" role="tabpanel">
-                    <h2>Sign Up form</h2>
-                    <form method="post">
-                        {% csrf_token %}
-                        {{sign_up.as_p}}
-                        <input type="submit" value="Sign up" name="Sign up" class="btn btn-primary btn-lg">
-                    </form>
-                </div>
-            </div>
-            </div>
+<div class="limiter">
+  <div class="identification-container">
+    <div class="identification-box">
+      <div class="login-100-form p-l-55 p-r-55 p-t-178">
+        <span class="login100-form-title">
+          <i class="far fa-sticky-note fa-lg p-r-10"></i> Just Note It
+        </span>
+        <div class="tab-content" id="pills-tabContent">
+          <div id="login" class="tab-pane fade show active" role="tabpanel">
+            <form method="post">
+              {% csrf_token %}
+              <div class="wrap-input100 m-b-16" data-validate="Please enter username">
+                {{ auth.username|add_class:'input100'|attr:"placeholder:Username" }}
+                <span class="focus-input100"></span>
+              </div>
+              <div class="wrap-input100 m-b-16" data-validate="Please enter username">
+                {{ auth.password|add_class:'input100'|attr:"placeholder:Password" }}
+                <span class="focus-input100"></span>
+              </div>
+              <div class="container-login100-form-btn p-b-50 p-t-20">
+                <input type="Submit" value="Authentication" name="Authentication" class="login100-form-btn">
+              </div>
+            </form>
+          </div>
+          <div id="signin" class="tab-pane fade" role="tabpanel">
+            <h2>Sign Up form</h2>
+            <form method="post">
+            {% csrf_token %}
+            {{sign_up}}
+            <input type="submit" value="Sign up" name="Sign up" class="btn btn-primary btn-lg">
+            </form>
+          </div>
         </div>
+      </div>
     </div>
+  </div>
 </div>
 {% endblock content %}

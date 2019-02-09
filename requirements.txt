@@ -3,3 +3,4 @@ psycopg2
 mixer
 # Test
 selenium
+django-widget-tweaks

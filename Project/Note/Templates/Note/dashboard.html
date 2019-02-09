@@ -1,13 +1,18 @@
 {% extends "Note/base.html" %}
 
 {% block content %}
-<h1>Categories</h1>
+<div class="d-flex" id="wrapper">
 {% if categories %}
-    <ul>
+    <div class="bg-light border-right" id="sidebar-wrapper">
+    <div class="sidebar-heading">Categories </div>
+    <div class="list-group list-group-flush">
     {% for category in categories %}
-        <li><a href="{% url 'Note:category' category.slug %}">{{ category.slug }}</a></li>
+        <a href="{% url 'Note:category' category.slug %}" class="list-group-item list-group-item-action bg-light">{{ category.title }}</a>
     {% endfor %}
-    </ul>
+    </div>
+    </div>
+    </div>
+    
 {% else %}
     <p>No categories</p>
 {% endif %}
@@ -15,7 +20,14 @@
 {% if notes %}
     <ul>
     {% for note in notes %}
-        <li><a href="{% url 'Note:detail' note.slug %}">{{ note.slug }}</a></li>
+    <div class="card" style="width: 18rem;">
+        <div class="card-body">
+            <h5 class="card-title">{{ note.title }}</h5>
+            <p class="card-text">{{ note.body}}</p>
+            <a href="{% url 'Note:detail' note.slug %}" class="card-link">Detail</a>
+            <a href="#" class="card-link">Another link</a>
+        </div>
+    </div>
     {% endfor %}
     </ul>
 {% else %}
