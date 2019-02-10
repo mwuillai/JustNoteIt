@@ -54,11 +54,23 @@ body {
             </form>
           </div>
           <div id="signin" class="tab-pane fade" role="tabpanel">
-            <h2>Sign Up form</h2>
             <form method="post">
             {% csrf_token %}
-            {{sign_up}}
-            <input type="submit" value="Sign up" name="Sign up" class="btn btn-primary btn-lg">
+            <div class="wrap-input100 m-b-16" data-validate="Please enter username">
+              {{ sign_up.username|add_class:'input100'|attr:"placeholder:Username" }}
+              <span class="focus-input100"></span>
+            </div>
+            <div class="wrap-input100 m-b-16" data-validate="Please enter username">
+              {{ sign_up.password1|add_class:'input100'|attr:"placeholder:Password" }}
+              <span class="focus-input100"></span>
+            </div>
+            <div class="wrap-input100 m-b-16" data-validate="Please enter username">
+              {{ sign_up.password2|add_class:'input100'|attr:"placeholder:Retype your password" }}
+              <span class="focus-input100"></span>
+            </div>
+            <div class="container-login100-form-btn p-b-50 p-t-20">
+             <input type="submit" value="Sign up" name="Sign up" class="login100-form-btn">
+            </div>
             </form>
           </div>
         </div>
