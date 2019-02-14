@@ -1,0 +1,80 @@
+{% extends "Note/base.html" %}
+{% load static %}
+
+{% load widget_tweaks %}
+
+{% block content %}
+
+
+<div class="dashboard">
+  <div class="leftpanel-container">
+    <div class="leftpanel-top">
+        <span class="title">
+            <i class="far fa-sticky-note fa-lg p-r-10"></i> Just Note It
+        </span>
+    </div>
+    <div class="leftpanel-categories">
+      all categories TULULU
+    </div>
+  </div>
+  <div class="dashboard-content">
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <a class="navbar-brand" href="#"><i class="far fa-sticky-note fa-lg p-r-10 text-white"></i> Dashboard</a>
+          </div>
+          <ul class="nav navbar-nav navbar-right nav-pills mb-3">
+            <li class="nav-item">
+              <a class="nav-link active" id="pills-home-tab" data-toggle="pill" role="tab" aria-controls="pills-home" aria-selected="true" href="#login">
+                  <span class="glyphicon glyphicon-log-in"></span>Login
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="pills-profile-tab" data-toggle="pill" role="tab" aria-controls="pills-profile" aria-selected="false" href="#signin">
+              <span class="glyphicon glyphicon-user"></span> Sign up
+              </a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+      <div class="cardboard">
+        <div class="col-md-3">
+        <div class="card bg-light mb-3" style="max-width: 18rem;">
+            <div class="card-header">Header</div>
+            <div class="card-body">
+              <h5 class="card-title">Light card title</h5>
+              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            </div>
+        </div>
+        </div>
+        <div class="col-md-3">
+                <div class="card bg-light mb-3" style="max-width: 18rem;">
+                    <div class="card-header">Header</div>
+                    <div class="card-body">
+                      <h5 class="card-title">Light card title</h5>
+                      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    </div>
+                </div>
+                </div>
+                <div class="col-md-3">
+                        <div class="card bg-light mb-3" style="max-width: 18rem;">
+                            <div class="card-header">Header</div>
+                            <div class="card-body">
+                              <h5 class="card-title">Light card title</h5>
+                              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            </div>
+                        </div>
+                        </div>
+                        <div class="col-md-3">
+                                <div class="card bg-light mb-3" style="max-width: 18rem;">
+                                    <div class="card-header">Header</div>
+                                    <div class="card-body">
+                                      <h5 class="card-title">Light card title</h5>
+                                      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                    </div>
+                                </div>
+                                </div>
+      </div>
+  </div>
+</div>
+{% endblock content %}
