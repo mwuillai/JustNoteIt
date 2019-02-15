@@ -159,7 +159,8 @@
 .dashboard {
   position: relative;
   top: 0;
-  height: 100vh;
+  height: 90vh;
+  overflow-x: hidden;
 }
 
 @media screen and (min-width: 720px) {
@@ -171,7 +172,7 @@
 
 .leftpanel-container {
   background-color:#0e7270;
-  position: relative;
+  position: fixed;
   top: 0;
   Left: 0;
   border-bottom-right-radius: 5%;
