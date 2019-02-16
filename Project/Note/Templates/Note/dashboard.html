@@ -1,50 +1,56 @@
 {% extends "Note/base.html" %}
+{% load static %}
 
 {% block content %}
-
 <div class="dashboard">
   <div class="leftpanel-container">
     <div class="leftpanel-top">
-        <span class="title">
-            <i class="far fa-sticky-note fa-lg p-r-10"></i> Just Note It
-        </span>
+      <span class="title">
+        <i class="far fa-sticky-note fa-lg p-r-10"></i> Just Note It
+      </span>
     </div>
     <div class="leftpanel-categories d-flex flex-column align-items-center">
-        {% for category in categories %}
-            <div class="p2 p-t-20"><button type="button" class="btn btn-primary btn-lg"><a href="{% url 'Note:category' category.slug %}">{{ category.title }}</a></button></div>
-        {% endfor %}
+      {% for category in categories %}
+      <div class="p2 p-t-20"><a href="{% url 'Note:category' category.slug %}" class="btn btn-primary btn-lg">{{ category.title }}</a></div>
+      {% endfor %}
     </div>
   </div>
   <div class="dashboard-content">
     <nav class="navbar navbar-expand-lg navbar-dark">
-        <div class="container-fluid">
-          <div class="navbar-header">
-            <a class="navbar-brand" href="#"><i class="fas fa-columns fa-lg p-r-10 text-white"></i> Dashboard</a>
-          </div>
-          <ul class="nav navbar-nav navbar-right nav-pills mb-3">
-            <li class="nav-item p-r-10">
-              <a href="{% url 'Note:new_note' %}" class="btn btn-primary btn-primary"><i class="fas fa-plus"></i> Add note</a>
-            </li>
-            <li class="nav-item p-r-10">
-              <a href="#" class="btn btn-primary btn-primary"><i class="fas fa-user-circle"></i> Account</a>
-            </li>
-          </ul>
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#"><i class="fas fa-columns fa-lg p-r-10 text-white"></i> Dashboard</a>
         </div>
+        <ul class="nav navbar-nav navbar-right nav-pills mb-3">
+          <li class="nav-item p-r-10">
+            <a href="{% url 'Note:new_note' %}" class="btn btn-primary btn-primary"><i class="fas fa-plus"></i> Add
+              note</a>
+          </li>
+          <li class="nav-item p-r-10">
+            <a href="#" class="btn btn-primary btn-primary"><i class="fas fa-user-circle"></i> Account</a>
+          </li>
+        </ul>
+      </div>
     </nav>
     <div class="row justify-content-center cardboard">
-        <div class="col-12 col-md-6 col-lg-4 col-xl-3">
-            {% for note in notes %}
-           <div class="card bg-light mb-3" style="max-width: 18rem;">
-              <div class="card-header text-center">{{ note.title }}</div>
-              <div class="card-body">
-                <h5 class="card-title">Light card title</h5>
-                <p class="card-text">{{ note.body}}</p>
-                <div class="row justify-content-around">
-                  <button type="button" class="btn btn-primary btn-sm"><i class="fas fa-pencil-alt"></i><a href="{% url 'Note:detail' note.slug %}">Edit</a></button>
-                  <button type="button" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i> Delete</button>
-                </div>
+      {% for note in notes %}
+      <div class="col-12 col-md-6 col-lg-4 col-xl-3">
+        <div class="card bg-light mb-3" style="max-width: 18rem;">
+          <div class="card-header text-center">{{ note.title }}</div>
+          <div class="card-body">
+            <h5 class="card-title">Light card title</h5>
+            <p class="card-text">{{ note.body}}</p>
+            <div class="row justify-content-around">
+              <a class="btn btn-primary btn-sm" href="{% url 'Note:detail' note.slug %}"><i class="fas fa-pencil-alt"></i>
+                Edit</a>
+              <button type="button" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i> Delete</button>
             </div>
-            </div>
-            {% endfor %}
+          </div>
         </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+</div>
 {% endblock content %}
