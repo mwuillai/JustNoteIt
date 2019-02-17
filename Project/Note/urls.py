@@ -10,5 +10,6 @@ urlpatterns = [
     path('notes/<slug:slug>', views.DetailNotesView.as_view(), name='detail'),
     path('category/<slug:slug>', views.DetailCategoriesView.as_view(), name='category'),
     path('new-note/', views.CreateNoteView.as_view(), name='new_note'),
-    path('dashboard/', views.Dashboard.as_view(), name='dashboard')
+    path('dashboard/', views.Dashboard.as_view(), name='dashboard'),
+    path('test/', views.test_html, name='test')
 ]

@@ -115,3 +115,6 @@ class CreateNoteView(LoginRequiredMixin, CreateView):
     def get_success_url(self):
         # messages.success(self.request, self.message)
         return reverse('Note:dashboard')
+
+def test_html(request):
+    return render(request, 'Note/dashboard_new.html')
