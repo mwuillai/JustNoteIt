@@ -114,6 +114,14 @@ class CreateNoteView(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         form.instance.user_id = self.request.user
         return super().form_valid(form)
+    
+    def get_context_data(self, *args, **kwargs):
+        current_user = self.request.user
+        context = super().get_context_data(*args, **kwargs)
+        context.update({
+            'categories': Category.objects.filter(user_id=current_user.id),
+        })
+        return context
 
     def get_success_url(self):
         # messages.success(self.request, self.message)
