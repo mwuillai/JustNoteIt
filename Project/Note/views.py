@@ -4,8 +4,11 @@ from django.contrib.auth import authenticate, login
 from .models import Category, Notes
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView, DetailView, CreateView
+from django.views.generic.edit import DeleteView
 from django.http import JsonResponse
 from .forms import NotesForm
+from django.urls import reverse_lazy
+from django.http import Http404
 
 def identification(request):
     """
@@ -116,5 +119,18 @@ class CreateNoteView(LoginRequiredMixin, CreateView):
         # messages.success(self.request, self.message)
         return reverse('Note:dashboard')
 
-def test_html(request):
-    return render(request, 'Note/dashboard_new.html')
+
+class DeleteNoteView(LoginRequiredMixin, DeleteView):
+    """
+    Basic view to delete a note. We have to check if the delete note is the owner of the note
+    TODO Everything
+    """
+    model = Notes
+    success_url = reverse_lazy('Note:dashboard')
+    fail_url = reverse_lazy('Note:dashboard') #TODO create a real fail url
+
+    def get_object(self, queryset=None):
+        object = super(DeleteNoteView, self).get_object()
+        if not object.user_id == self.request.user:
+            raise Http404
+        return object

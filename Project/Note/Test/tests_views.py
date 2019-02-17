@@ -182,3 +182,58 @@ class TestDetailCategory(TestCase):
             '/?next=' + reverse('Note:category', args=([self.category.slug])),
             status_code=302,
             target_status_code=200)
+
+
+
+class TestDeleteNoteView(TestCase):
+    """
+    Test detail note view
+    Test if delete note work for owner of the note
+    Test if delete note return 404 error for someone who delete a note doesn't own
+    """
+    def setUp(self):
+        user_with_note = User.objects.create_user('test', 'test@test.com', 'test')
+        user_with_note.save()
+        user_without_note = User.objects.create_user('test_without_note','test_without_note@test.com', 'test')
+        user_without_note.save()
+        self.client_with_account_with_note = Client()
+        self.client_with_account_with_note.login(username='test', password='test')
+        self.client_without_account = Client()
+        self.client_with_account_without_note = Client()
+        self.client_with_account_without_note.login(username='test_without_note', password='test')
+        self.note = Notes(
+            title = "Test",
+            body = "Body of my test note",
+            created_at = datetime.now(pytz.timezone(TIME_ZONE)),
+            user_id = user_with_note)
+        self.note.save()
+        
+
+    def test_delete_as_not_owner(self):
+        """
+        test to delete a note you don't own
+        """
+        amount_of_note_before_delete = Notes.objects.count()
+        response = self.client_with_account_without_note.post(reverse('Note:delete_note', args=([self.note.slug])))
+        self.assertEqual(404, response.status_code) 
+        self.assertEqual(Notes.objects.count(), amount_of_note_before_delete )
+
+    def test_delete_as_visitor(self):
+        """
+        test if a visitor is redirect
+        """
+        response = self.client_without_account.post(reverse('Note:delete_note', args=([self.note.slug])), follow=True)
+        self.assertRedirects(
+            response,
+            '/?next=' + reverse('Note:delete_note', args=([self.note.slug])),
+            status_code=302,
+            target_status_code=200)
+    
+    def test_delete_as_owner(self):
+        """
+        test to delete a note you don't own
+        """
+        amount_of_note_before_delete = Notes.objects.count()
+        response = self.client_with_account_with_note.post(reverse('Note:delete_note', args=([self.note.slug])))
+        self.assertEqual(302, response.status_code)
+        self.assertEqual(Notes.objects.count(), amount_of_note_before_delete - 1 )

@@ -43,7 +43,10 @@
             <div class="row justify-content-around">
               <a class="btn btn-primary btn-sm" href="{% url 'Note:detail' note.slug %}"><i class="fas fa-pencil-alt"></i>
                 Edit</a>
-              <button type="button" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i> Delete</button>
+              <form action="{% url 'Note:delete_note' note.slug %}" method="POST">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i> Delete</button>
+              </form>
             </div>
           </div>
         </div>

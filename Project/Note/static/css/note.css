@@ -149,6 +149,24 @@
   }
 
 
+/*------------------------------------------------------------------
+[ Dashboard ]*/
+
+.dashboard {
+  position: relative;
+  top: 0;
+  height: 90vh;
+  overflow-x: hidden;
+  background-color: rgb(250, 250, 250)
+}
+
+@media screen and (min-width: 720px) {
+  .leftpanel-container {
+    height: 100vh;
+    width: 250px;
+  }
+}
+
 .leftpanel-container {
   background-color: #0e7270;
   position: fixed;

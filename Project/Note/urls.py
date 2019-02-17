@@ -11,5 +11,5 @@ urlpatterns = [
     path('category/<slug:slug>', views.DetailCategoriesView.as_view(), name='category'),
     path('new-note/', views.CreateNoteView.as_view(), name='new_note'),
     path('dashboard/', views.Dashboard.as_view(), name='dashboard'),
-    path('test/', views.test_html, name='test')
+    path('delete_note/<slug:slug>', views.DeleteNoteView.as_view(), name='delete_note'),
 ]
