@@ -10,6 +10,21 @@ from .forms import NotesForm
 from django.urls import reverse_lazy
 from django.http import Http404
 
+def add_categories_in_context(func):
+    """
+    Decorator to put on get_context method in a view class to update
+    the context with categories. Categories are present in each view of
+    the dashboard
+    """
+    def inner(self, *args, **kwargs):
+        context = func(self, *args, **kwargs)
+        current_user = self.request.user
+        context.update({
+            'categories': Category.objects.filter(user_id=current_user.id),
+        })
+        return context
+    return inner
+
 def identification(request):
     """
     Views identification, there is two form on this views
@@ -53,12 +68,9 @@ class Dashboard(LoginRequiredMixin, ListView):
     context_object_name = "notes"
     template_name = "Note/dashboard.html"
 
+    @add_categories_in_context
     def get_context_data(self, *args, **kwargs):
-        current_user = self.request.user
         context = super().get_context_data(*args, **kwargs)
-        context.update({
-            'categories': Category.objects.filter(user_id=current_user.id),
-        })
         return context
 
     def get_queryset(self, **kwargs):
@@ -72,21 +84,19 @@ class DetailNotesView(LoginRequiredMixin, DetailView):
     context_object_name = "notes"
     template_name = "Note/detail.html"
 
+    @add_categories_in_context
     def get_context_data(self, *args, **kwargs):
-        current_user = self.request.user
         context = super().get_context_data(*args, **kwargs)
-        context.update({
-            'categories': Category.objects.filter(user_id=current_user.id),
-        })
         return context
 
 
 class DetailCategoriesView(LoginRequiredMixin, DetailView):
     """Basic DetailView implementation for filter notes of an individual category."""
     model = Category
-    context_object_name = "categories"
+    context_object_name = "main_category"
     template_name = "Note/category.html"
 
+    @add_categories_in_context
     def get_context_data(self, *args, **kwargs):
         current_user = self.request.user
         context = super().get_context_data(*args, **kwargs)
@@ -115,12 +125,9 @@ class CreateNoteView(LoginRequiredMixin, CreateView):
         form.instance.user_id = self.request.user
         return super().form_valid(form)
     
+    @add_categories_in_context
     def get_context_data(self, *args, **kwargs):
-        current_user = self.request.user
         context = super().get_context_data(*args, **kwargs)
-        context.update({
-            'categories': Category.objects.filter(user_id=current_user.id),
-        })
         return context
 
     def get_success_url(self):

@@ -51,6 +51,8 @@ class Category(models.Model):
     """
     Class of the category model. they can have a tittle.
     Many notes can be attach to a category, and only one user can be attach to it.
+    TODO there is a proble with many to many fields. I have to attach in two way my categories to my note
+    I have to see how to solve this and set up test to avoid this problem
     """
 
     title = models.CharField(max_length=30)
