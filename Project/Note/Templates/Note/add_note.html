@@ -2,22 +2,25 @@
 {% load widget_tweaks %}
 
 {% block content %}
-<div class="formbox">
-    <form method="POST">
-        {% csrf_token %}
-        <div class="form-group">
-        <label for="title">Title</label>
-        {{ form.title|add_class:'form-control'|attr:"id:title" }}
-        </div>
-        <div class="form-group">
-        <label for="body">Note</label>
-        {{ form.body|add_class:'form-control'|attr:"id:Note"|attr:"style:height:100px" }}
-        </div>
-        <div class="form-group">
-            <label for="category">Note</label>
-            {{ form.category_id|add_class:'form-control'|attr:"id:category" }}
-        </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
+<div class="d-flex flex-row justify-content-center p-t-20">
+    <div class="formbox">
+        <div class="formtitle text-center">New Note</div>
+        <form method="POST">
+            {% csrf_token %}
+            <div class="form-group">
+            <label for="title">Title</label>
+            {{ form.title|add_class:'form-control'|attr:"id:title" }}
+            </div>
+            <div class="form-group">
+            <label for="body">Note</label>
+            {{ form.body|add_class:'form-control'|attr:"id:Note"|attr:"style:height:100px" }}
+            </div>
+            <div class="form-group">
+                <label for="category">Note</label>
+                {{ form.category_id|add_class:'form-control'|attr:"id:category" }}
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Submit</button>
+        </form>
+    </div>
 </div>
 {% endblock content %}

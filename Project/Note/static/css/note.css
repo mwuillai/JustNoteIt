@@ -216,11 +216,26 @@
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
+/*------------------------------------------------------------------
+[ add_form ]*/
+
+.formtitle {
+  padding-top: 15px;
+  margin-top: -10px;
+  margin-left: -10px;
+  margin-right: -10px;
+  margin-bottom: 15px;
+  padding-bottom: 15px;
+  background-color: rgba(86,61,124,.15);
+  font-family: 'Varela Round', sans-serif;
+  font-size: 25px;
+  line-height: 1,2;
+}
+
 .formbox {
   position: relative;
-  min-width: 0;
-  max-width: 70vw;
-  max-height: 70vh;
+  width: 70vw;
+  padding: 10px;
   word-wrap: break-word;
   background-color: #fff;
   background-clip: border-box;
