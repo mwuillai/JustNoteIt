@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect, reverse
+from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import authenticate, login
 from .models import Category, Notes
@@ -117,7 +118,7 @@ class CreateNoteView(LoginRequiredMixin, CreateView):
     TODO manage message and category selection
     """
     model = Notes
-    # message = _("Your note has been created.")
+    message = "Your note has been created."
     form_class = NotesForm
     template_name = 'Note/add_note.html'
 
@@ -131,7 +132,7 @@ class CreateNoteView(LoginRequiredMixin, CreateView):
         return context
 
     def get_success_url(self):
-        # messages.success(self.request, self.message)
+        messages.success(self.request, self.message)
         return reverse('Note:dashboard')
 
 
@@ -149,3 +150,26 @@ class DeleteNoteView(LoginRequiredMixin, DeleteView):
         if not object.user_id == self.request.user:
             raise Http404
         return object
+
+
+# class CreateCategoryView(LoginRequiredMixin, CreateView):
+#     """Basic CreateView implementation to create new Category.
+#     TODO manage message and category selection
+#     """
+#     model = Category
+#     # message = _("Your note has been created.")
+#     form_class = CategoryForm
+#     template_name = 'Note/add_note.html'
+
+#     def form_valid(self, form):
+#         form.instance.user_id = self.request.user
+#         return super().form_valid(form)
+    
+#     @add_categories_in_context
+#     def get_context_data(self, *args, **kwargs):
+#         context = super().get_context_data(*args, **kwargs)
+#         return context
+
+#     def get_success_url(self):
+#         # messages.success(self.request, self.message)
+#         return reverse('Note:dashboard')

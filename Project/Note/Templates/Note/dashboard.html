@@ -8,8 +8,7 @@
     <div class="card bg-light mb-3" style="max-width: 18rem;">
       <div class="card-header text-center">{{ note.title }}</div>
       <div class="card-body">
-        <h5 class="card-title">Light card title</h5>
-        <p class="card-text">{{ note.body}}</p>
+        <p class="card-text">{{ note.body|truncatewords_html:7 }}</p>
         <div class="row justify-content-around">
           <a class="btn btn-primary btn-sm" href="{% url 'Note:detail' note.slug %}"><i class="fas fa-pencil-alt"></i>
             Edit</a>
