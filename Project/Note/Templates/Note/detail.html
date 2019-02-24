@@ -1,5 +1,20 @@
-{% extends "Note/base.html" %}
+{% extends "Note/nav.html" %}
 
 {% block content %}
-<h1>{{ notes.title }}</h1>
+<div class="d-flex flex-row justify-content-center p-t-20">
+    <div class="formbox">
+        <div>
+            <div class="formtitle text-center">
+            {{ note.title }}
+            </div>
+            <div>
+            {{ note.body }}
+            </div>
+            <div class="d-flex flex-row justify-content-around m-t-25">
+            <a class="btn btn-info btn-lg" href="{% url 'Note:edit_note' note.slug %}"><i class="fas fa-pencil-alt"></i> Edit</a>
+            <a class="btn btn-secondary btn-lg" href="{% url 'Note:dashboard' %}"><i class="fas fa-caret-square-left"></i> Back</a>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock content %}

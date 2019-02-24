@@ -5,7 +5,7 @@ from django.contrib.auth import authenticate, login
 from .models import Category, Notes
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView, DetailView, CreateView
-from django.views.generic.edit import DeleteView
+from django.views.generic.edit import DeleteView, UpdateView
 from django.http import JsonResponse
 from .forms import NotesForm
 from django.urls import reverse_lazy
@@ -32,9 +32,6 @@ def identification(request):
     the first is the native authentication django form and the
     second one is the userCreationForm. in the post response
     the difference between those two form is made with the input button.
-
-    STILL TODO : Manage the possibility of a login user from a previous session
-    who will directly reach the dashboard view
     """
     if request.method == "POST":
         if 'Authentication' in request.POST:
@@ -54,12 +51,17 @@ def identification(request):
                 return redirect('Note:identification')
             return redirect('Note:dashboard')
     else:
-        sign_up_form = UserCreationForm()
-        auth_form = AuthenticationForm()
-        return render(request, 'Note/identification.html', {
-            'auth':auth_form,
-            'sign_up':sign_up_form
-        })
+        if request.user.is_authenticated:
+            return redirect("Note:dashboard")
+        else :
+            sign_up_form = UserCreationForm()
+            auth_form = AuthenticationForm()
+            return render(request, 'Note/identification.html', {
+                'auth':auth_form,
+                'sign_up':sign_up_form
+            })
+
+
 
 
 class Dashboard(LoginRequiredMixin, ListView):
@@ -82,7 +84,7 @@ class Dashboard(LoginRequiredMixin, ListView):
 class DetailNotesView(LoginRequiredMixin, DetailView):
     """Basic DetailView implementation to call an individual Notes."""
     model = Notes
-    context_object_name = "notes"
+    context_object_name = "note"
     template_name = "Note/detail.html"
 
     @add_categories_in_context
@@ -115,7 +117,7 @@ In this I will be able to refresh categoryh list of a form without refresh the w
 
 class CreateNoteView(LoginRequiredMixin, CreateView):
     """Basic CreateView implementation to create new notes.
-    TODO manage message and category selection
+    TODO add category selection
     """
     model = Notes
     message = "Your note has been created."
@@ -136,14 +138,26 @@ class CreateNoteView(LoginRequiredMixin, CreateView):
         return reverse('Note:dashboard')
 
 
+class UpdateNoteView(LoginRequiredMixin, UpdateView):
+    model = Notes
+    form_class = NotesForm
+    template_name = "Note/add_note.html"
+
+    @add_categories_in_context
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
+    
+    def get_success_url(self):
+        return reverse('Note:dashboard')
+
+
 class DeleteNoteView(LoginRequiredMixin, DeleteView):
     """
     Basic view to delete a note. We have to check if the delete note is the owner of the note
-    TODO Everything
     """
     model = Notes
     success_url = reverse_lazy('Note:dashboard')
-    fail_url = reverse_lazy('Note:dashboard') #TODO create a real fail url
 
     def get_object(self, queryset=None):
         object = super(DeleteNoteView, self).get_object()
