@@ -7,7 +7,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView, DetailView, CreateView
 from django.views.generic.edit import DeleteView, UpdateView
 from django.http import JsonResponse
-from .forms import NotesForm
+from .forms import NotesForm, CategoryForm
 from django.urls import reverse_lazy
 from django.http import Http404
 
@@ -104,7 +104,7 @@ class DetailCategoriesView(LoginRequiredMixin, DetailView):
         current_user = self.request.user
         context = super().get_context_data(*args, **kwargs)
         context.update({
-            'notes': Notes.objects.filter(user_id=current_user.id, category__slug=self.get_object().slug),
+            'notes': Notes.objects.filter(user_id=current_user.id, category_id=self.get_object().pk),
         })
         return context
 
@@ -166,24 +166,38 @@ class DeleteNoteView(LoginRequiredMixin, DeleteView):
         return object
 
 
-# class CreateCategoryView(LoginRequiredMixin, CreateView):
-#     """Basic CreateView implementation to create new Category.
-#     TODO manage message and category selection
-#     """
-#     model = Category
-#     # message = _("Your note has been created.")
-#     form_class = CategoryForm
-#     template_name = 'Note/add_note.html'
+class CreateCategoryView(LoginRequiredMixin, CreateView):
+    """
+    Basic CreateView implementation to create new Category.
+    """
+    model = Category
+    message = "Your note has been created."
+    form_class = CategoryForm
+    template_name = 'Note/add_category.html'
 
-#     def form_valid(self, form):
-#         form.instance.user_id = self.request.user
-#         return super().form_valid(form)
+    def form_valid(self, form):
+        form.instance.user_id = self.request.user
+        return super().form_valid(form)
     
-#     @add_categories_in_context
-#     def get_context_data(self, *args, **kwargs):
-#         context = super().get_context_data(*args, **kwargs)
-#         return context
+    @add_categories_in_context
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        return context
 
-#     def get_success_url(self):
-#         # messages.success(self.request, self.message)
-#         return reverse('Note:dashboard')
+    def get_success_url(self):
+        messages.success(self.request, self.message)
+        return reverse('Note:dashboard')
+
+
+class DeleteCategoryView(LoginRequiredMixin, DeleteView):
+    """
+    Basic view to delete a category. We have to check if the delete note is the owner of the note
+    """
+    model = Category
+    success_url = reverse_lazy('Note:dashboard')
+
+    def get_object(self, queryset=None):
+        object = super(DeleteCategoryView, self).get_object()
+        if not object.user_id == self.request.user:
+            raise Http404
+        return object

@@ -1,0 +1,18 @@
+{% extends "Note/nav.html" %}
+{% load widget_tweaks %}
+
+{% block content %}
+<div class="d-flex flex-row justify-content-center p-t-20">
+    <div class="formbox">
+        <div class="formtitle text-center">New Category</div>
+        <form method="POST">
+            {% csrf_token %}
+            <div class="form-group">
+            <label for="title">Title</label>
+            {{ form.title|add_class:'form-control'|attr:"id:title" }}
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Submit</button>
+        </form>
+    </div>
+</div>
+{% endblock content %}

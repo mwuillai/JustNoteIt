@@ -1,14 +1,32 @@
 {% extends "Note/nav.html" %}
 
 {% block content %}
-<h1>{{ main_category.title }}</h1>
-<h1>Notes</h1>
+<div class="text-center page-header m-t-15">
+    <h1>{{ main_category.title }}</h1>
+</div>
 {% if notes %}
-    <ul>
-    {% for note in notes %}
-        <li><a href="{% url 'Note:detail' note.slug %}">{{ note.slug }}</a></li>
-    {% endfor %}
-    </ul>
+<div class="row justify-content-center cardboard">
+  {% for note in notes %}
+  <div class="col-12 col-md-6 col-lg-4 col-xl-3">
+    <div class="card bg-light mb-3" style="max-width: 18rem;">
+      <div class="card-header text-center">{{ note.title }}</div>
+      <div class="card-body">
+        <p class="card-text">{{ note.body|truncatewords_html:7 }}</p>
+        <div class="row justify-content-around">
+          <a class="btn btn-primary btn-sm" href="{% url 'Note:detail' note.slug %}"><i class="fas fa-eye"></i>
+            Consult</a>
+          <a class="btn btn-info btn-sm" href="{% url 'Note:edit_note' note.slug %}"><i class="fas fa-pencil-alt"></i>
+            Edit</a>
+          <form action="{% url 'Note:delete_note' note.slug %}" method="POST">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i> Delete</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
 {% else %}
     <p>No notes</p>
 {% endif %}

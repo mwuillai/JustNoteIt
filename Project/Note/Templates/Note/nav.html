@@ -11,9 +11,17 @@
     </div>
     <div class="leftpanel-categories d-flex flex-column align-items-center">
       {% for category in categories %}
-      <div class="p2 p-t-20"><a href="{% url 'Note:category' category.slug %}" class="btn btn-primary btn-lg">{{ category.title }}</a></div>
+      <div class="btn-group" role="group">
+        <div class="p2 p-t-20"><a href="{% url 'Note:category' category.slug %}" class="btn btn-primary btn-lg">{{ category.title }}</a></div>
+        <div class="p2 p-t-20">
+          <form action="{% url 'Note:delete_category' category.slug %}" method="POST">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-primary btn-lg"><i class="fas fa-trash-alt"></i></button>
+          </form>
+        </div>
+      </div>
       {% endfor %}
-      <div class="p2 p-t-20"><a href="#" class="btn btn-primary btn-lg"><i class="fas fa-plus"></i> Add Category</a></div>
+      <div class="p2 p-t-20"><a href="{% url 'Note:new_category' %}" class="btn btn-primary btn-lg"><i class="fas fa-plus"></i> Add Category</a></div>
     </div>
   </div>
   <div class="dashboard-content">
@@ -29,7 +37,7 @@
               note</a>
           </li>
           <li class="nav-item p-r-10">
-            <a href="#" class="btn btn-primary btn-primary"><i class="fas fa-user-circle"></i> Account</a>
+            <a href="{% url 'Note:logout' %}" class="btn btn-primary btn-primary"><i class="fas fa-user-circle"></i> Account</a>
           </li>
         </ul>
       </div>
