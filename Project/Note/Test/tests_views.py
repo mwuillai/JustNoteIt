@@ -187,7 +187,7 @@ class TestDetailCategory(TestCase):
 
 class TestDeleteNoteView(TestCase):
     """
-    Test detail note view
+    Test delete note view
     Test if delete note work for owner of the note
     Test if delete note return 404 error for someone who delete a note doesn't own
     """
@@ -209,7 +209,7 @@ class TestDeleteNoteView(TestCase):
         self.note.save()
         
 
-    def test_delete_as_not_owner(self):
+    def test_delete_note_as_not_owner(self):
         """
         test to delete a note you don't own
         """
@@ -229,7 +229,7 @@ class TestDeleteNoteView(TestCase):
             status_code=302,
             target_status_code=200)
     
-    def test_delete_as_owner(self):
+    def test_delete_as_note_owner(self):
         """
         test to delete a note you don't own
         """
@@ -237,3 +237,72 @@ class TestDeleteNoteView(TestCase):
         response = self.client_with_account_with_note.post(reverse('Note:delete_note', args=([self.note.slug])))
         self.assertEqual(302, response.status_code)
         self.assertEqual(Notes.objects.count(), amount_of_note_before_delete - 1 )
+
+
+class DeleteCategoryView(TestCase):
+    """
+    Test delete category view
+    Test if delete work for owner of the category
+    Test if delete return a 404 error for a not owner
+    """
+    def setUp(self):
+        user_with_category = User.objects.create_user(
+            "test",
+            'test@test.com',
+            'test')
+        user_with_category.save()
+        user_without_category = User.objects.create_user(
+            'test_without_cat',
+            'test_without_cat@test.com',
+            'test'
+        )
+        user_without_category.save()
+        self.client_with_category = Client()
+        self.client_without_category = Client()
+        self.client_with_category.login(
+            username='test',
+            password='test',
+        )
+        self.client_without_category.login(
+            username='test_without_cat',
+            password='test',
+        )
+        self.category = Category(
+            title = "Test_category"
+        )
+        self.category.save()
+
+    def test_delete_category_as_not_owner(self):
+        """
+        Test to delete a cetegory you don't own
+        It must fail obviously
+        """
+        amount_of_cat_before_delete = Category.objects.count()
+        response = self.client_without_category.post(
+            reverse(
+                'Note:delete_category',
+                args=([self.category.slug])
+                )
+        )
+        self.assertEqual(404, response.status_code)
+        self.assertEqual(
+            Category.objects.count(),
+            amount_of_cat_before_delete
+        )
+    def test_delete_as_cat_owner(self):
+        """
+        Test to delete a category you own
+        """
+        amount_of_cat_before_delete = Category.objects.count()
+        response = self.client_with_category.post(
+            reverse(
+                'Note:delete_category',
+                args=([self.category.slug])
+            )
+        )
+        self.assertEqual(302, response.status_code)
+        self.assertEqual(
+            Category.objects.count(),
+            (amount_of_cat_before_delete - 1)
+        )
+
