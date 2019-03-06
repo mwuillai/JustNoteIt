@@ -8,6 +8,9 @@
     <div class="card bg-light mb-3" style="max-width: 18rem;">
       <div class="card-header text-center">{{ note.title }}</div>
       <div class="card-body">
+        {% for category in note.category_id.all %}
+        <span class="badge badge-pill badge-success">{{ category.title }}</span>
+        {% endfor %}
         <p class="card-text">{{ note.body|truncatewords_html:7 }}</p>
         <div class="row justify-content-around">
           <a class="btn btn-primary btn-sm" href="{% url 'Note:detail' note.slug %}"><i class="fas fa-eye"></i>
