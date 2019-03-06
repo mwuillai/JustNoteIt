@@ -1,25 +1,11 @@
-.login100-form-btn, .identification-container {
-  display: -webkit-box;
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: -webkit-flex;
-  display: flex;
-}
-
-.title, .login100-form-title {
-  font-family: "Varela Round", sans-serif;
-  font-size: 30px;
-  line-height: 1.2;
-  color: #fff;
-  text-align: center;
-}
-
-/* --------------------------------- */
-/* ---- [ authentication page ] ---- */
-/* --------------------------------- */
 .identification-container {
   width: 100%;
   min-height: 100vh;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
@@ -32,15 +18,11 @@
   background: #fff;
   border-radius: 20px;
   overflow: hidden;
+  box-shadow: 0 3px 20px 0px rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: 0 3px 20px 0px rgba(0, 0, 0, 0.1);
   -webkit-box-shadow: 0 3px 20px 0px rgba(0, 0, 0, 0.1);
   -o-box-shadow: 0 3px 20px 0px rgba(0, 0, 0, 0.1);
   -ms-box-shadow: 0 3px 20px 0px rgba(0, 0, 0, 0.1);
-  -moz-box-shadow: 0 3px 20px 0px rgba(0, 0, 0, 0.1);
-  box-shadow: 0 3px 20px 0px rgba(0, 0, 0, 0.1);
-  -webkit-transition: all 10s;
-  -o-transition: all 10s;
-  -ms-transition: all 10s;
-  -moz-transition: all 10s;
   transition: all 10s;
 }
 
@@ -55,20 +37,28 @@
 }
 
 .login100-form-title {
+  font-family: 'Varela Round', sans-serif;
+  font-size: 30px;
+  color: #fff;
+  line-height: 1.2;
+  text-align: center;
+
   display: block;
   position: absolute;
   width: 100%;
   top: 0;
   left: 0;
   background-color: #0e7270;
-  padding: 50px 0px 39px 0px;
+  padding-top: 50px;
+  padding-bottom: 39px;
 }
 
 .input100 {
-  font-family: "Varela Round", sans-serif;
+  font-family: 'Varela Round', sans-serif;
   font-size: 15px;
-  line-height: 1.2;
   color: #0e7270;
+  line-height: 1.2;
+
   position: relative;
   display: block;
   width: 100%;
@@ -76,6 +66,7 @@
   background: #ebebeb;
   border-radius: 27px;
   padding: 0 35px 0 35px;
+
   border: none;
 }
 
@@ -87,7 +78,9 @@
   z-index: 1;
 }
 
-/*---[ Focus Input ]---*/
+/*------------------------------------------------------------------
+[ Focus Input ]*/
+
 .focus-input100 {
   display: block;
   position: absolute;
@@ -101,50 +94,70 @@
   -ms-transform: translateX(-50%);
   -o-transform: translateX(-50%);
   transform: translateX(-50%);
-  border-radius: 27px;
+  border-radius: 31px;
   background-color: #ebebeb;
   pointer-events: none;
+
   -webkit-transition: all 0.4s;
-  -moz-transition: all 0.4s;
-  -ms-transition: all 0.4s;
   -o-transition: all 0.4s;
+  -moz-transition: all 0.4s;
   transition: all 0.4s;
 }
 
-.input100:focus + .focus-input100 {
+.input100:focus+.focus-input100 {
   width: calc(100% + 20px);
 }
 
-/*---[ Button ]---*/
-.login100-form-btn {
-  justify-content: center;
-  align-items: center;
-  padding: 0 20px;
+.container-login100-form-btn {
   width: 100%;
-  height: 50px;
-  background-color: #0e7270;
-  border-radius: 25px;
-  border: none;
-  font-family: "Varela Round", sans-serif;
-  font-size: 15px;
-  line-height: 1.2;
-  color: #fff;
-  -webkit-transition: all 0.4s;
-  -o-transition: all 0.4s;
-  -moz-transition: all 0.4s;
-  -ms-transition: all 0.4s;
-  transition: all 0.4s;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
-/* --------------------------------- */
-/* -------- [ Dashboard ] ---------- */
-/* --------------------------------- */
+/*------------------------------------------------------------------
+[ Button ]*/
+
+  .login100-form-btn {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 20px;
+    width: 100%;
+    height: 50px;
+    background-color: #0e7270;
+    border-radius: 25px;
+    border: none;
+  
+    font-family: 'Varela Round', sans-serif;
+    font-size: 15px;
+    color: #fff;
+    line-height: 1.2;
+  
+    -webkit-transition: all 0.4s;
+    -o-transition: all 0.4s;
+    -moz-transition: all 0.4s;
+    transition: all 0.4s;
+  }
+
+
+/*------------------------------------------------------------------
+[ Dashboard ]*/
+
 .dashboard {
   position: relative;
   top: 0;
-  height: 100vh;
+  height: 90vh;
   overflow-x: hidden;
-  background-color: #ebebeb;
+  background-color: rgb(250, 250, 250)
 }
 
 @media screen and (min-width: 720px) {
@@ -153,11 +166,12 @@
     width: 250px;
   }
 }
+
 .leftpanel-container {
   background-color: #0e7270;
   position: fixed;
   top: 0;
-  left: 0;
+  Left: 0;
   border-bottom-right-radius: 5%;
 }
 
@@ -166,9 +180,19 @@
     display: none;
   }
 }
+
 .leftpanel-top {
+  border-bottom: 2px solid #138785;
   padding: 15px;
   height: 70px;
+}
+
+.title {
+  font-family: 'Varela Round', sans-serif;
+  font-size: 30px;
+  color: #fff;
+  line-height: 1.2;
+  text-align: center;
 }
 
 .dashboard-content {
@@ -180,8 +204,8 @@
 
 .navbar {
   height: 70px;
-  background-color: #0e7270;
-  padding: 0;
+  background-color: #006666;
+  padding: 0
 }
 
 .cardboard {
@@ -192,25 +216,30 @@
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
-/* --- [ add form ] -- */
+/*------------------------------------------------------------------
+[ add_form ]*/
+
 .formtitle {
-  padding: 15px 0 15px 0;
-  margin: -10px -10px 15px -10px;
-  background-color: rgba(86, 61, 124, 0.15);
-  font-family: "Varela Round", sans-serif;
+  padding-top: 15px;
+  margin-top: -10px;
+  margin-left: -10px;
+  margin-right: -10px;
+  margin-bottom: 15px;
+  padding-bottom: 15px;
+  background-color: rgba(86,61,124,.15);
+  font-family: 'Varela Round', sans-serif;
   font-size: 25px;
-  line-height: 1.2;
+  line-height: 1,2;
 }
 
 .formbox {
   position: relative;
   width: 70vw;
+  padding: 10px;
   word-wrap: break-word;
   background-color: #fff;
   background-clip: border-box;
-  border: 1px solid rgba(0, 0, 0, 0.125);
-  border-radius: 0.25rem;
+  border: 1px solid rgba(0,0,0,.125);
+  border-radius: .25rem;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
-
-/*# sourceMappingURL=note.css.map */

@@ -1,0 +1,242 @@
+//---- [ app variable ] ----
+
+$primary-color: #0e7270;
+$white: #ebebeb;
+$black: rgba(86,61,124,.15);
+$font-title: 'Varela Round', sans-serif;
+
+//---- [ extension management ] ----
+
+@mixin prefix($map, $vendors: webkit khtml moz ms o) {
+    @each $prop, $value in $map {
+    @if $vendors {
+    @each $vendor in $vendors {
+    #{"-" + $vendor + "-" + $prop}: #{$value};
+    }
+    }
+   #{$prop}: #{$value};
+    }
+   }
+
+%flex {
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+}
+
+@mixin main-font($size) {
+    font-family: $font-title;
+    font-size: $size;
+    line-height: 1.2;
+}
+
+%title {
+    @include main-font(30px);
+    color: #fff;
+    text-align:center;
+}
+
+/* --------------------------------- */
+/* ---- [ authentication page ] ---- */
+/* --------------------------------- */
+
+.identification-container {
+    width: 100%;
+    min-height: 100vh;
+    @extend %flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+    position: relative;
+}
+
+.identification-box {
+    width: 500px;
+    background: #fff;
+    border-radius: 20px;
+    overflow: hidden;
+    @include prefix(
+        (box-shadow: 0 3px 20px 0px rgba(0,0,0,0.1)),
+        webkit o ms moz);
+    @include prefix(
+        (transition: all 10s),
+        webkit o ms moz
+    );
+}
+
+.limiter {
+    width: 100%;
+    margin: 0 auto;
+}
+
+.login-100-form {
+    position: relative;
+    width: 100%;
+}
+
+.login100-form-title {
+    @extend %title;
+    display: block;
+    position: absolute;
+    width: 100%;
+    top: 0;
+    left: 0;
+    background-color: $primary-color;
+    padding: 50px 0px 39px 0px;
+}
+
+.input100 {
+    @include main-font(15px);
+    color: $primary-color;
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 55px;
+    background: $white;
+    border-radius: 27px;
+    padding:  0 35px 0 35px;
+    border: none;
+}
+
+.wrap-input100 {
+    width: 100%;
+    background-color: #fff;
+    border-radius: 27px;
+    position: relative;
+    z-index: 1;
+}
+
+/*---[ Focus Input ]---*/
+
+.focus-input100 {
+    display: block;
+    position: absolute;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 50%;
+    @include prefix(
+        (transform: translateX(-50%)),
+        webkit moz ms o
+        );
+    border-radius: 27px;
+    background-color: $white;
+    pointer-events: none;
+    @include prefix(
+        (transition: all 0.4s),
+        webkit moz ms o
+        );
+}
+
+.input100:focus + .focus-input100 {
+    width: calc(100% + 20px);
+}
+
+/*---[ Button ]---*/
+
+.login100-form-btn {
+    @extend %flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 20px;
+    width: 100%;
+    height: 50px;
+    background-color: $primary-color;
+    border-radius: 25px;
+    border: none;
+    @include main-font(15px);
+    color: #fff;
+    @include prefix(
+        (transition: all 0.4s),
+        webkit o moz ms
+        );
+}
+
+/* --------------------------------- */
+/* -------- [ Dashboard ] ---------- */
+/* --------------------------------- */
+
+.dashboard {
+    position: relative;
+    top: 0;
+    height: 100vh;
+    overflow-x: hidden;
+    background-color: $white;
+}
+
+@media screen and (min-width: 720px) {
+    .leftpanel-container {
+        height: 100vh;
+        width: 250px;
+    }
+}
+
+.leftpanel-container {
+    background-color: $primary-color;
+    position: fixed;
+    top: 0;
+    left: 0;
+    border-bottom-right-radius: 5%;
+}
+
+@media screen and (max-width: 720px) {
+    .leftpanel-container {
+        display: none;
+    }
+}
+
+.leftpanel-top {
+    padding: 15px;
+    height: 70px;
+}
+
+.title {
+    @extend %title;
+}
+
+.dashboard-content {
+    position: absolute;
+    left: 250px;
+    width: calc(100vw - 250px);
+    top: 0;
+}
+
+.navbar {
+    height: 70px;
+    background-color: $primary-color;
+    padding: 0
+}
+
+.cardboard {
+    padding: 20px;
+}
+
+.card {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2),
+    0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+/* --- [ add form ] -- */
+
+.formtitle {
+    padding: 15px 0 15px 0;
+    margin: -10px -10px 15px -10px;
+    background-color: $black;
+    @include main-font(25px);
+}
+
+.formbox {
+    position: relative;
+    width: 70vw;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    border-radius: 0.25rem;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2),
+    0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
