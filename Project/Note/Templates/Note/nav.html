@@ -24,22 +24,30 @@
       <div class="p2 p-t-20"><a href="{% url 'Note:new_category' %}" class="btn btn-primary btn-lg"><i class="fas fa-plus"></i> Add Category</a></div>
     </div>
   </div>
-  <div class="dashboard-content">
-    <nav class="navbar navbar-expand-lg navbar-dark">
+  <div class="dashboard-content open">
+    <nav class="navbar navbar-expand navbar-dark p-r-10">
       <div class="container-fluid">
         <div class="navbar-header">
-          <a class="navbar-brand" href="{% url 'Note:dashboard' %}"><i class="fas fa-columns fa-lg p-r-10 text-white"></i>
+        <button class="navbar-panel-button m-r-10 btn btn-primary" type="button" id="panel_button">
+          <i class="fas fa-bars"></i>
+        </button>
+          <a class="navbar-brand m-l-10 m-r-10" href="{% url 'Note:dashboard' %}"><i class="fas fa-columns fa-lg p-r-10 text-white"></i>
             Dashboard</a>
         </div>
-        <ul class="nav navbar-nav navbar-right nav-pills mb-3">
-          <li class="nav-item p-r-10">
-            <a href="{% url 'Note:new_note' %}" class="btn btn-primary btn-primary"><i class="fas fa-plus"></i> Add
-              note</a>
-          </li>
-          <li class="nav-item p-r-10">
-            <a href="{% url 'Note:logout' %}" class="btn btn-primary btn-primary"><i class="fas fa-user-circle"></i> Account</a>
-          </li>
-        </ul>
+        <div class="justify-content-end p-2">
+          <ul class="nav navbar-nav navbar-right mb-auto">
+            <li class="nav-item m-r-10">
+              <a href="{% url 'Note:new_note' %}" class="btn btn-primary btn-primary"><i class="fas fa-plus"></i>
+                <span class="nav-label">Add note</span>
+              </a>
+            </li>
+            <li class="nav-item m-r-10">
+              <a href="{% url 'Note:logout' %}" class="btn btn-primary btn-primary"><i class="fas fa-user-circle"></i>
+                <span class="nav-label">Account</span>
+              </a>
+            </li>
+          </ul>
+        </div>
       </div>
     </nav>
     {% if messages %}

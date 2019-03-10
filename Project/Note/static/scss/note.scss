@@ -4,6 +4,7 @@ $primary-color: #0e7270;
 $white: #ebebeb;
 $black: rgba(86,61,124,.15);
 $font-title: 'Varela Round', sans-serif;
+$break: 700px;
 
 //---- [ extension management ] ----
 
@@ -36,6 +37,15 @@ $font-title: 'Varela Round', sans-serif;
     @include main-font(30px);
     color: #fff;
     text-align:center;
+}
+
+@mixin respond-to($media) {
+  @if $media == small-screens {
+    @media only screen and (max-width: $break) { @content; }
+  }
+  @else if $media == medium-screens {
+    @media only screen and (min-width: $break + 1) { @content; }
+  }
 }
 
 /* --------------------------------- */
@@ -168,25 +178,14 @@ $font-title: 'Varela Round', sans-serif;
     background-color: $white;
 }
 
-@media screen and (min-width: 720px) {
-    .leftpanel-container {
-        height: 100vh;
-        width: 250px;
-    }
-}
-
 .leftpanel-container {
     background-color: $primary-color;
     position: fixed;
     top: 0;
     left: 0;
     border-bottom-right-radius: 5%;
-}
-
-@media screen and (max-width: 720px) {
-    .leftpanel-container {
-        display: none;
-    }
+    height: 100vh;
+    width: 250px;
 }
 
 .leftpanel-top {
@@ -203,12 +202,54 @@ $font-title: 'Varela Round', sans-serif;
     left: 250px;
     width: calc(100vw - 250px);
     top: 0;
+    background-color: $white;
+    height: 100vh;
+}
+
+.open {
+    @include respond-to("small-screens") {
+        left: 0;
+        width: 100vw;
+    }
+}
+
+.hide {
+    @include respond-to("small-screens") {
+        display: none;
+    }
+}
+
+.while {
+    @include prefix(
+        (transition: all 1s),
+        webkit o ms moz
+    );
+}
+
+.nav-label {
+    @include respond-to("small-screens") {
+        display: none;
+    }
 }
 
 .navbar {
     height: 70px;
     background-color: $primary-color;
     padding: 0
+}
+
+.navbar-panel-button {
+    @include respond-to("medium-screens") {
+        display: none;
+    }
+
+    @include respond-to("small-screens") {
+        display: inline-block;
+        vertical-align: top;
+        content: "";
+        background-size: 100% 100%;
+        margin-left: 10px;
+    }
 }
 
 .cardboard {

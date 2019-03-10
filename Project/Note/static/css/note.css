@@ -147,25 +147,16 @@
   background-color: #ebebeb;
 }
 
-@media screen and (min-width: 720px) {
-  .leftpanel-container {
-    height: 100vh;
-    width: 250px;
-  }
-}
 .leftpanel-container {
   background-color: #0e7270;
   position: fixed;
   top: 0;
   left: 0;
   border-bottom-right-radius: 5%;
+  height: 100vh;
+  width: 250px;
 }
 
-@media screen and (max-width: 720px) {
-  .leftpanel-container {
-    display: none;
-  }
-}
 .leftpanel-top {
   padding: 15px;
   height: 70px;
@@ -176,12 +167,56 @@
   left: 250px;
   width: calc(100vw - 250px);
   top: 0;
+  background-color: #ebebeb;
+  height: 100vh;
+}
+
+@media only screen and (max-width: 700px) {
+  .open {
+    left: 0;
+    width: 100vw;
+  }
+}
+
+@media only screen and (max-width: 700px) {
+  .hide {
+    display: none;
+  }
+}
+
+.while {
+  -webkit-transition: all 1s;
+  -o-transition: all 1s;
+  -ms-transition: all 1s;
+  -moz-transition: all 1s;
+  transition: all 1s;
+}
+
+@media only screen and (max-width: 700px) {
+  .nav-label {
+    display: none;
+  }
 }
 
 .navbar {
   height: 70px;
   background-color: #0e7270;
   padding: 0;
+}
+
+@media only screen and (min-width: 701px) {
+  .navbar-panel-button {
+    display: none;
+  }
+}
+@media only screen and (max-width: 700px) {
+  .navbar-panel-button {
+    display: inline-block;
+    vertical-align: top;
+    content: "";
+    background-size: 100% 100%;
+    margin-left: 10px;
+  }
 }
 
 .cardboard {
