@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, reverse
 from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from .models import Category, Notes
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView, DetailView, CreateView
@@ -32,6 +32,7 @@ def identification(request):
     the first is the native authentication django form and the
     second one is the userCreationForm. in the post response
     the difference between those two form is made with the input button.
+    TODO manage error message
     """
     if request.method == "POST":
         if 'Authentication' in request.POST:
@@ -61,7 +62,12 @@ def identification(request):
                 'sign_up':sign_up_form
             })
 
-
+def logout_view(request):
+    """
+    Simple logout view
+    """
+    logout(request)
+    return redirect('Note:identification')
 
 
 class Dashboard(LoginRequiredMixin, ListView):
@@ -117,7 +123,7 @@ In this I will be able to refresh categoryh list of a form without refresh the w
 
 class CreateNoteView(LoginRequiredMixin, CreateView):
     """Basic CreateView implementation to create new notes.
-    TODO add category selection
+    TODO add category selection, manage filter of category selection on current user
     """
     model = Notes
     message = "Your note has been created."

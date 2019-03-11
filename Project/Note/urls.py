@@ -5,7 +5,6 @@ from . import views
 
 app_name = "Note"
 urlpatterns = [
-    path('accounts/', include('django.contrib.auth.urls')),
     path('', views.identification, name='identification'),
     path('notes/<slug:slug>', views.DetailNotesView.as_view(), name='detail'),
     path('edit-note/<slug:slug>', views.UpdateNoteView.as_view(), name='edit_note'),
@@ -15,4 +14,5 @@ urlpatterns = [
     path('dashboard/', views.Dashboard.as_view(), name='dashboard'),
     path('delete_note/<slug:slug>', views.DeleteNoteView.as_view(), name='delete_note'),
     path('delete_category/<slug:slug>', views.DeleteCategoryView.as_view(), name='delete_category'),
+    path('logout/', views.logout_view, name='logout'),
     ]
